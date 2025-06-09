@@ -18,6 +18,8 @@ int relationship = 2;
 int mood = 3;
 int cp = 0;
 int at_home_last_turn = 0;
+int has_mouse = 0;
+int has_laser = 0;
 
 // 함수 선언
 void clear_screen();
@@ -115,31 +117,51 @@ void interaction(int choice, const char* name) {
     printf("%d이(가) 나왔습니다!\n", dice);
 
     if (choice == 0) {
-        printf("%s는 아무것도 하지 않습니다.\n", name);
-        printf("4/6 확률로 친밀도가 떨어집니다.\n");
-
-        if (dice <= 4 && relationship > 0) {
-            relationship--;
-            printf("친밀도가 떨어집니다.\n");
+        printf("%s는 아무것도 하지 않아요.\n", name);
+        if (mood > 0) {
+            mood--;
+            printf("기분이 나빠졌어요: %d -> %d\n", mood + 1, mood);
         }
-        else {
-            printf("다행히 친밀도가 떨어지지 않았습니다.\n");
+        if (dice <= 5 && relationship > 0) {
+            relationship--;
+            printf("집사와의 관계가 나빠졌어요.\n");
         }
     }
     else if (choice == 1) {
-        printf("%s의 턱을 긁어주었습니다.\n", name);
-        printf("2/6 확률로 친밀도가 올라갑니다.\n");
-
+        printf("%s의 턱을 긁어줬어요.\n", name);
         if (dice >= 5 && relationship < 4) {
             relationship++;
-            printf("친밀도가 올라갑니다.\n");
+            printf("친밀도가 올라갔어요!\n");
         }
         else {
-            printf("친밀도는 그대로입니다.\n");
+            printf("별 반응 없네요.\n");
         }
     }
+    else if (choice == 2) {
+        printf("장난감 쥐로 %s와 놀아줬어요.\n", name);
+        if (mood < 3) {
+            mood++;
+            printf("기분이 좋아졌어요! 현재 기분: %d\n", mood);
+        }
+        if (dice >= 4 && relationship < 4) {
+            relationship++;
+            printf("친밀도도 살짝 올라갔어요!\n");
+        }
+    }
+    else if (choice == 3) {
+        printf("레이저 포인터로 %s와 신나게 놀았어요!\n", name);
+        mood += 2;
+        if (mood > 3) mood = 3;
+        printf("기분이 확 좋아졌어요! 현재 기분: %d\n", mood);
+        if (dice >= 2 && relationship < 4) {
+            relationship++;
+            printf("친밀도도 올라감!\n");
+        }
+    }
+
     printf("현재 친밀도: %d\n", relationship);
 }
+
 
 // 이동
 void move_cat(const char* name) {
@@ -254,14 +276,22 @@ int main() {
         int choice;
         while (1) {
             printf("어떤 상호작용을 하시겠습니까?\n");
-            printf("0. 아무것도 하지 않음\n1. 긁어주기\n>> ");
+            printf("0. 아무것도 하지 않음\n");
+            printf("1. 긁어주기\n");
+            if (has_mouse) printf("2. 장난감 쥐로 놀아주기\n");
+            if (has_laser) printf("3. 레이저 포인터로 놀아주기\n");
+            printf(">> ");
             scanf_s("%d", &choice);
 
-            if (choice == 0 || choice == 1) {
+            
+            if (choice == 0 || choice == 1 ||
+                (choice == 2 && has_mouse) ||
+                (choice == 3 && has_laser)) {
                 break;
             }
             printf("잘못된 입력입니다. 다시 입력해 주세요.\n");
         }
+
 
         interaction(choice, name);
 
