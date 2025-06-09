@@ -75,7 +75,7 @@ void print5_status() {
     }
     printf("===========================================\n\n");
 }
-
+d
 // 방 상태 출력
 void print_room() {
     for (int i = 0; i < ROOM_WIDTH; i++) printf("#");
