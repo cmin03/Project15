@@ -53,11 +53,19 @@ void print_intro(char* name) {
 }
 
 // 현재 상태 출력
-void print_status() {
+void print5_status() {
     printf("================ 현재 상태 ================\n");
     printf("현재까지 만든 수프: %d개\n", soup_count);
+    printf("CP: %d 포인트\n", cp);
+    printf("기분(0~3): %d\n", mood);
+    switch (mood) {
+    case 0: printf("기분이 매우 나쁩니다.\n"); break;
+    case 1: printf("심심해합니다.\n"); break;
+    case 2: printf("식빵을 굽습니다.\n"); break;
+    case 3: printf("골골송을 부릅니다.\n"); break;
+    }
+   
     printf("집사와의 관계(0~4): %d\n", relationship);
-
     switch (relationship) {
     case 0: printf("곁에 오는 것조차 싫어합니다.\n"); break;
     case 1: printf("간식 자판기 취급입니다.\n"); break;
