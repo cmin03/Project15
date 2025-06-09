@@ -15,6 +15,8 @@ int cat_pos = 5;
 int prev_cat_pos = 5;
 int soup_count = 0;
 int relationship = 2;
+int mood = 3;
+int cp = 0;
 
 // 함수 선언
 void clear_screen();
