@@ -28,6 +28,7 @@ int roll_dice();
 void interaction(int choice, const char* name);
 void move_cat(const char* name);
 void action(const char* name);
+void update_mood(const char* name);
 
 // 화면을 지우는 함수
 void clear_screen() {
@@ -53,7 +54,7 @@ void print_intro(char* name) {
 }
 
 // 현재 상태 출력
-void print5_status() {
+void print_status() {
     printf("================ 현재 상태 ================\n");
     printf("현재까지 만든 수프: %d개\n", soup_count);
     printf("CP: %d 포인트\n", cp);
@@ -75,7 +76,7 @@ void print5_status() {
     }
     printf("===========================================\n\n");
 }
-ㅇㄹㅇㄹ
+
 // 방 상태 출력
 void print_room() {
     for (int i = 0; i < ROOM_WIDTH; i++) printf("#");
@@ -188,6 +189,27 @@ void action(const char* name) {
     }
     else if (cat_pos == HME_POS) {
         printf("%s은(는) 집에서 편안하게 쉬고 있습니다.\n", name);
+    }
+}
+void update_mood(const char* name) {
+    printf("아무 이유 없이 기분이 나빠집니다. 고양이니까?\n");
+
+    int dice = roll_dice();
+    printf("주사위를 굴립니다. 또르륵...\n");
+    Sleep(1000);
+    printf("%d이(가) 나왔습니다.\n", dice);
+
+    if (dice <= (6 - relationship)) {
+        if (mood > 0) {
+            printf("%s의 기분이 나빠집니다: %d -> %d\n", name, mood, mood - 1);
+            mood--;
+        }
+        else {
+            printf("%s의 기분은 이미 최저입니다.\n", name);
+        }
+    }
+    else {
+        printf("다행히 기분이 그대로입니다.\n");
     }
 }
 
