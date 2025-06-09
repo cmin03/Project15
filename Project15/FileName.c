@@ -17,6 +17,7 @@ int soup_count = 0;
 int relationship = 2;
 int mood = 3;
 int cp = 0;
+int at_home_last_turn = 0;
 
 // 함수 선언
 void clear_screen();
@@ -180,18 +181,42 @@ void move_cat(const char* name) {
 
 // 행동
 void action(const char* name) {
+    
     if (cat_pos == BWL_POS) {
-        printf("%s이(가) 수프를 만들고 있습니다!\n", name);
+        printf("%s이(가) 수프를 만들고 있어요!\n", name);
         const char* soups[] = { "감자 수프", "양송이 수프", "브로콜리 수프" };
         int idx = rand() % 3;
         printf("%s 1개를 만들었습니다!\n", soups[idx]);
         soup_count++;
-        printf("현재까지 만든 수프: %d개\n", soup_count);
+        printf("지금까지 만든 수프: %d개\n", soup_count);
+        at_home_last_turn = 0; 
     }
+
+    
     else if (cat_pos == HME_POS) {
-        printf("%s은(는) 집에서 편안하게 쉬고 있습니다.\n", name);
+        printf("%s은(는) 집에서 쉬고 있어요.\n", name);
+        if (at_home_last_turn == 1) {
+            if (mood < 3) {
+                mood = mood + 1;
+                printf("기분이 조금 좋아졌어요! 현재 기분: %d\n", mood);
+            }
+            else {
+                printf("기분이 이미 최고예요!\n");
+            }
+        }
+        else {
+            printf("이번 턴엔 도착만 해서 쉬진 않았어요.\n");
+        }
+        at_home_last_turn = 1;
+    }
+
+    
+    else {
+        printf("%s은(는) 아무 행동도 하지 않아요.\n", name);
+        at_home_last_turn = 0;
     }
 }
+
 void update_mood(const char* name) {
     printf("아무 이유 없이 기분이 나빠집니다. 고양이니까?\n");
 
