@@ -300,6 +300,25 @@ int main() {
 
         Sleep(500);
         action(name);
+        // CP 생산하기
+        int 기분점수 = 0;
+
+        if (mood > 1) {
+            기분점수 = mood - 1;
+        }
+        else {
+            기분점수 = 0;
+        }
+
+        int 이번cp = 기분점수 + relationship;
+
+        printf("기분 점수는 %d이고, 친밀도는 %d이므로,\n", 기분점수, relationship);
+        printf("이번 턴에 얻은 CP는 %d 포인트입니다.\n", 이번cp);
+
+        
+
+        printf("총 보유 CP: %d 포인트\n", cp);
+
 
         Sleep(2500);
         system("cls");
