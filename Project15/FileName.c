@@ -29,6 +29,7 @@ void interaction(int choice, const char* name);
 void move_cat(const char* name);
 void action(const char* name);
 void update_mood(const char* name);
+void move_cat_by_mood(const char* name);
 
 // 화면을 지우는 함수
 void clear_screen() {
@@ -240,7 +241,7 @@ int main() {
         interaction(choice, name);
 
         Sleep(500);
-        move_cat(name);
+        move_cat_by_mood(name);
 
         Sleep(500);
         action(name);
@@ -251,3 +252,40 @@ int main() {
 
     return 0;
 }
+void move_cat_by_mood(const char* name) {
+    Sleep(500);
+    prev_cat_pos = cat_pos;
+
+    if (mood == 0) {
+        printf("기분이 별로인 %s은(는) 집으로 갑니다...\n", name);
+        if (cat_pos > 1) {
+            cat_pos = cat_pos - 1;
+        }
+    }
+    else if (mood == 1) {
+        printf("%s은(는) 좀 심심한가봐요...\n", name);
+        printf("근데 놀이기구가 없어요ㅠㅠ 그래서 더 기분 나빠짐\n");
+
+        if (mood > 0) {
+            mood = mood - 1;
+            printf("기분이 나빠짐: %d -> %d\n", mood + 1, mood);
+        }
+    }
+    else if (mood == 2) {
+        printf("%s은(는) 지금 식빵 굽는 중이에요. 가만히 있어요.\n", name);
+    }
+    else if (mood == 3) {
+        printf("%s은(는) 골골송 부르면서 수프 만들러 가는 중이에요\n", name);
+        if (cat_pos < ROOM_WIDTH - 2) {
+            cat_pos = cat_pos + 1;
+        }
+    }
+
+    if (cat_pos == prev_cat_pos) {
+        printf("안 움직였어요. 가만히 있는 중.\n");
+    }
+
+    print_room();
+}
+
+
