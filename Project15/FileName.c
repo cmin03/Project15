@@ -222,6 +222,7 @@ int main() {
 
     while (1) {
         print_status();
+        update_mood(name);
         print_room();
 
         int choice;
