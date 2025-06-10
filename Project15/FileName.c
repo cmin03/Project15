@@ -96,6 +96,8 @@ void print_room() {
     for (int i = 0; i < ROOM_WIDTH; i++) {
         if (i == HME_POS) printf("H");
         else if (i == BWL_POS) printf("B");
+        else if (i == scratch_pos) printf("S");
+        else if (i == tower_pos) printf("T");
         else printf(" ");
     }
     printf("\n");
@@ -326,6 +328,7 @@ int main() {
 
         printf("총 보유 CP: %d 포인트\n", cp);
         shop(); 
+        place_furniture();
 
 
 
@@ -472,6 +475,7 @@ void place_furniture() {
             pos = rand() % ROOM_WIDTH;
             if (pos != HME_POS && pos != BWL_POS && pos != scratch_pos) break;
         }
+
         tower_pos = pos;
     }
 }
