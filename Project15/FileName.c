@@ -22,6 +22,8 @@ int has_mouse = 0;
 int has_laser = 0;
 int has_scratch = 0;
 int has_tower = 0;
+int scratch_pos = -1;
+int tower_pos = -1;
 
 // 함수 선언
 void clear_screen();
@@ -36,6 +38,8 @@ void action(const char* name);
 void update_mood(const char* name);
 void move_cat_by_mood(const char* name);
 void shop();
+void place_furniture();
+
 
 // 화면을 지우는 함수
 void clear_screen() {
@@ -448,6 +452,27 @@ void shop() {
     }
     else {
         printf("잘못된 입력이에요.\n");
+    }
+}
+void place_furniture() {
+    
+    if (has_scratch && scratch_pos == -1) {
+        int pos;
+        while (1) {
+            pos = rand() % ROOM_WIDTH;
+            if (pos != HME_POS && pos != BWL_POS && pos != tower_pos) break;
+        }
+        scratch_pos = pos;
+    }
+
+    
+    if (has_tower && tower_pos == -1) {
+        int pos;
+        while (1) {
+            pos = rand() % ROOM_WIDTH;
+            if (pos != HME_POS && pos != BWL_POS && pos != scratch_pos) break;
+        }
+        tower_pos = pos;
     }
 }
 
